@@ -16,39 +16,35 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-window.login = function () {
-  alert("Login button clicked");
-  const email = document.getElementById("email").value;
+document.getElementById("loginBtn").addEventListener("click", () => {
+  const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
 
   signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
+    .then((userCredential) => {
+      alert("Login successful!");
       window.location.href = "dashboard.html";
     })
     .catch((error) => {
-    switch (error.code) {
-        case "auth/user-not-found":
-            alert("This email is not registered. Please sign up first.");
-            break;
-
-        case "auth/wrong-password":
-            alert("Incorrect password.");
-            break;
+      switch (error.code) {
+        case "auth/invalid-credential":
+          alert("Incorrect email or password.");
+          break;
 
         case "auth/invalid-email":
-            alert("Please enter a valid email address.");
-            break;
+          alert("Please enter a valid email address.");
+          break;
 
-        case "auth/invalid-credential":
-            alert("Invalid email or password.");
-            break;
+        case "auth/user-disabled":
+          alert("This account has been disabled.");
+          break;
 
         case "auth/too-many-requests":
-            alert("Too many failed attempts. Please try again later.");
-            break;
+          alert("Too many failed attempts. Please try again later.");
+          break;
 
         default:
-            alert("Login failed: " + error.message);
-    }
+          alert("Login failed: " + error.message);
+      }
+    });
 });
-};
