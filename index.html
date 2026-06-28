@@ -3,21 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEGIT Login</title>
+    <title>LEGIT</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-    <h2>LEGIT</h2>
+    <h1>LEGIT</h1>
+    <p>Welcome Back</p>
 
-    <input type="email" id="email" placeholder="Enter your email">
+    <input type="email" id="email" placeholder="Email Address" required>
 
-    <input type="password" id="password" placeholder="Enter your password">
+    <input type="password" id="password" placeholder="Password" required>
 
-    <button onclick="login()">Login</button>
+    <button id="loginBtn">Login</button>
 
-    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+    <p>
+        Don't have an account?
+        <a href="signup.html">Create Account</a>
+    </p>
 </div>
 
 <script type="module" src="app.js"></script>
