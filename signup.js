@@ -4,6 +4,12 @@ import {
   createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 
+import {
+  getFirestore,
+  doc,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAOvI9756xstsLc7ZMou75pSDd5ZZU0cfg",
   authDomain: "legit-ee0ae.firebaseapp.com",
@@ -15,13 +21,25 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 window.signup = function () {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
 
   createUserWithEmailAndPassword(auth, email, password)
-    .then(() => {
+    .then(async (userCredential) => {
+
+      const user = userCredential.user;
+
+      await setDoc(doc(db, "users", user.uid), {
+        email: user.email,
+        balance: 0,
+        earnings: 0,
+        rewards: 0,
+        createdAt: new Date()
+      });
+
       alert("Account created successfully! Please log in.");
       window.location.href = "index.html";
     })
