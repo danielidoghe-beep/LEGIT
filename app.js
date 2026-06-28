@@ -25,6 +25,28 @@ window.login = function () {
       window.location.href = "dashboard.html";
     })
     .catch((error) => {
-      alert(error.message);
-    });
-};
+    switch (error.code) {
+        case "auth/user-not-found":
+            alert("This email is not registered. Please sign up first.");
+            break;
+
+        case "auth/wrong-password":
+            alert("Incorrect password.");
+            break;
+
+        case "auth/invalid-email":
+            alert("Please enter a valid email address.");
+            break;
+
+        case "auth/invalid-credential":
+            alert("Invalid email or password.");
+            break;
+
+        case "auth/too-many-requests":
+            alert("Too many failed attempts. Please try again later.");
+            break;
+
+        default:
+            alert("Login failed: " + error.message);
+    }
+});
