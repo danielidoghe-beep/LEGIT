@@ -50,3 +50,4 @@ window.login = function () {
             alert("Login failed: " + error.message);
     }
 });
+};
