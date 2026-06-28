@@ -1,21 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>LEGIT Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEGIT Dashboard</title>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="container">
-        <h2>Welcome to LEGIT</h2>
-        <p>You have successfully logged in.</p>
 
-        <button onclick="logout()">Logout</button>
+<body>
+
+<div class="dashboard">
+
+    <h2>🏦 LEGIT</h2>
+
+    <p id="userEmail">Welcome!</p>
+
+    <div class="balance-card">
+        <h3>Available Balance</h3>
+        <h1>$0.00</h1>
     </div>
 
-    <script>
-        function logout() {
-            window.location.href = "index.html";
-        }
-    </script>
+    <div class="buttons">
+        <button id="depositBtn">💳 Deposit</button>
+        <button id="withdrawBtn">💸 Withdraw</button>
+    </div>
+
+    <div class="card">
+        <h3>Total Earnings</h3>
+        <p>$0.00</p>
+    </div>
+
+    <div class="card">
+        <h3>Rewards</h3>
+        <p>0 Points</p>
+    </div>
+
+    <div class="card">
+        <h3>Transaction History</h3>
+        <p>No transactions yet.</p>
+    </div>
+
+    <button id="logoutBtn">🚪 Logout</button>
+
+</div>
+
+<script type="module" src="dashboard.js"></script>
+
 </body>
 </html>
