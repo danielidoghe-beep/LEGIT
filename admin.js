@@ -66,6 +66,7 @@ onAuthStateChanged(auth, async (user) => {
     const button = card.querySelector(".updateBalanceBtn");
 
     button.addEventListener("click", async () => {
+      alert("Button clicked");
       const newBalance = Number(input.value);
 
       if (isNaN(newBalance) || newBalance < 0) {
