@@ -8,7 +8,9 @@ import {
 import {
   getFirestore,
   collection,
-  getDocs
+  getDocs,
+  doc,
+  updateDoc
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -42,21 +44,46 @@ onAuthStateChanged(auth, async (user) => {
     "Welcome, " + user.email;
 
   const snapshot = await getDocs(collection(db, "users"));
-
   document.getElementById("totalUsers").textContent = snapshot.size;
 
   const usersList = document.getElementById("usersList");
+  const template = document.getElementById("userCardTemplate");
+
   usersList.innerHTML = "";
 
-  snapshot.forEach((doc) => {
-    const data = doc.data();
+  snapshot.forEach((userDoc) => {
+    const data = userDoc.data();
 
-    usersList.innerHTML += `
-      <div class="card">
-        <h3>${data.email}</h3>
-        <p>Balance: $${Number(data.balance).toFixed(2)}</p>
-      </div>
-    `;
+    const card = template.content.cloneNode(true);
+
+    card.querySelector(".userEmail").textContent = data.email;
+    card.querySelector(".userBalance").textContent =
+      "$" + Number(data.balance).toFixed(2);
+
+    const input = card.querySelector(".balanceInput");
+    const button = card.querySelector(".updateBalanceBtn");
+
+    button.addEventListener("click", async () => {
+      const newBalance = Number(input.value);
+
+      if (isNaN(newBalance) || newBalance < 0) {
+        alert("Please enter a valid balance.");
+        return;
+      }
+
+      await updateDoc(doc(db, "users", userDoc.id), {
+        balance: newBalance
+      });
+
+      card.querySelector(".userBalance").textContent =
+        "$" + newBalance.toFixed(2);
+
+      input.value = "";
+
+      alert("Balance updated successfully!");
+    });
+
+    usersList.appendChild(card);
   });
 });
 
