@@ -53,8 +53,23 @@ onAuthStateChanged(auth, async (user) => {
   document.getElementById("totalUsers").textContent = snapshot.size;
 
   const usersList = document.getElementById("usersList");
+  const depositRequestsList = document.getElementById("depositRequestsList");
   const template = document.getElementById("userCardTemplate");
+depositRequestsList.innerHTML = "";
 
+const depositSnapshot = await getDocs(collection(db, "depositRequests"));
+
+depositSnapshot.forEach((requestDoc) => {
+  const request = requestDoc.data();
+
+  depositRequestsList.innerHTML += `
+    <div class="card">
+      <h3>${request.email}</h3>
+      <p>Amount: $${Number(request.amount).toFixed(2)}</p>
+      <p>Status: ${request.status}</p>
+    </div>
+  `;
+});
   usersList.innerHTML = "";
 
   snapshot.forEach((userDoc) => {
