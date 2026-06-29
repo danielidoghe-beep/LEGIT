@@ -12,7 +12,11 @@ import {
   doc,
   updateDoc,
   addDoc,
-  serverTimestamp
+  serverTimestamp,
+  getDoc,
+  setDoc,
+  query,
+  where
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -66,7 +70,6 @@ onAuthStateChanged(auth, async (user) => {
     const button = card.querySelector(".updateBalanceBtn");
 
     button.addEventListener("click", async () => {
-      alert("Button clicked");
       const newBalance = Number(input.value);
 
       if (isNaN(newBalance) || newBalance < 0) {
