@@ -5,6 +5,12 @@ import {
   signOut
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 
+import {
+  getFirestore,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAOvI9756xstsLc7ZMou75pSDd5ZZU0cfg",
   authDomain: "legit-ee0ae.firebaseapp.com",
@@ -16,18 +22,28 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
-// Show the logged-in user's email
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    document.getElementById("userEmail").textContent =
-      "Welcome, " + user.email;
-  } else {
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
     window.location.href = "index.html";
+    return;
+  }
+
+  document.getElementById("userEmail").textContent =
+    "Welcome, " + user.email;
+
+  const docRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    const data = docSnap.data();
+
+    document.getElementById("balance").textContent =
+      "$" + Number(data.balance).toFixed(2);
   }
 });
 
-// Logout button
 document.getElementById("logoutBtn").addEventListener("click", () => {
   signOut(auth).then(() => {
     window.location.href = "index.html";
