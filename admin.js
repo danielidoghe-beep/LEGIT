@@ -99,9 +99,15 @@ onAuthStateChanged(auth, async (user) => {
 
         alert("✅ Balance updated and transaction saved!");
       } catch (error) {
-        console.error(error);
-        alert("❌ Error updating balance: " + error.message);
-      }
+  console.error(error);
+  console.error(error.stack);
+
+  alert(
+    "Error: " + error.message +
+    "\n\nStack:\n" +
+    error.stack
+  );
+}
     });
 
     usersList.appendChild(card);
