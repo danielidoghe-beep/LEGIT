@@ -30,6 +30,27 @@
 Loading users...
 </div>
 
+<template id="userCardTemplate">
+  <div class="card">
+    <h3 class="userEmail"></h3>
+    <p>Balance: <strong class="userBalance">$0.00</strong></p>
+
+    <input
+      type="number"
+      class="balanceInput"
+      placeholder="Enter new balance"
+      min="0"
+      step="0.01"
+    >
+
+    <button class="updateBalanceBtn">
+      💾 Update Balance
+    </button>
+
+    <hr>
+  </div>
+</template>
+
 <button id="logoutBtn">🚪 Logout</button>
 
 </div>
