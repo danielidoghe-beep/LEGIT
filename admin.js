@@ -10,7 +10,9 @@ import {
   collection,
   getDocs,
   doc,
-  updateDoc
+  updateDoc,
+  addDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -71,16 +73,34 @@ onAuthStateChanged(auth, async (user) => {
         return;
       }
 
-      await updateDoc(doc(db, "users", userDoc.id), {
-        balance: newBalance
-      });
+      try {
+        // Update the user's balance
+        await updateDoc(doc(db, "users", userDoc.id), {
+          balance: newBalance
+        });
 
-      card.querySelector(".userBalance").textContent =
-        "$" + newBalance.toFixed(2);
+        // Save a transaction
+        await addDoc(
+          collection(db, "users", userDoc.id, "transactions"),
+          {
+            type: "Admin Credit",
+            amount: newBalance,
+            date: new Date().toLocaleDateString(),
+            createdAt: serverTimestamp()
+          }
+        );
 
-      input.value = "";
+        // Update the balance on the page
+        card.querySelector(".userBalance").textContent =
+          "$" + newBalance.toFixed(2);
 
-      alert("Balance updated successfully!");
+        input.value = "";
+
+        alert("✅ Balance updated and transaction saved!");
+      } catch (error) {
+        console.error(error);
+        alert("❌ Error updating balance: " + error.message);
+      }
     });
 
     usersList.appendChild(card);
