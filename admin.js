@@ -35,8 +35,9 @@ const db = getFirestore(app);
 const ADMIN_EMAIL = "danielidoghe@gmail.com";
 
 onAuthStateChanged(auth, async (user) => {
+  try {
   if (!user) {
-   try { 
+   
     window.location.href = "index.html";
     return;
   }
