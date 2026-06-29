@@ -36,6 +36,7 @@ const ADMIN_EMAIL = "danielidoghe@gmail.com";
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
+   try { 
     window.location.href = "index.html";
     return;
   }
@@ -144,4 +145,14 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
   signOut(auth).then(() => {
     window.location.href = "index.html";
   });
+  } catch (error) {
+  console.error(error);
+
+  alert(
+    "Admin Error:\n" +
+    error.message +
+    "\n\n" +
+    error.stack
+  );
+}
 });
