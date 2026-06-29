@@ -60,6 +60,9 @@ depositRequestsList.innerHTML = "";
 const depositSnapshot = await getDocs(collection(db, "depositRequests"));
 
 depositSnapshot.forEach((requestDoc) => {
+  if (request.status === "Approved") {
+  return;
+}
   const request = requestDoc.data();
 
   if (request.status === "Approved") {
