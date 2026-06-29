@@ -62,11 +62,19 @@ const depositSnapshot = await getDocs(collection(db, "depositRequests"));
 depositSnapshot.forEach((requestDoc) => {
   const request = requestDoc.data();
 
+  if (request.status === "Approved") {
+    return;
+  }
+
   depositRequestsList.innerHTML += `
     <div class="card">
       <h3>${request.email}</h3>
       <p>Amount: $${Number(request.amount).toFixed(2)}</p>
       <p>Status: ${request.status}</p>
+
+      <button class="approveDepositBtn" data-id="${requestDoc.id}">
+        ✅ Approve Deposit
+      </button>
     </div>
   `;
 });
