@@ -42,7 +42,22 @@ onAuthStateChanged(auth, async (user) => {
     "Welcome, " + user.email;
 
   const snapshot = await getDocs(collection(db, "users"));
+
   document.getElementById("totalUsers").textContent = snapshot.size;
+
+  const usersList = document.getElementById("usersList");
+  usersList.innerHTML = "";
+
+  snapshot.forEach((doc) => {
+    const data = doc.data();
+
+    usersList.innerHTML += `
+      <div class="card">
+        <h3>${data.email}</h3>
+        <p>Balance: $${Number(data.balance).toFixed(2)}</p>
+      </div>
+    `;
+  });
 });
 
 document.getElementById("logoutBtn").addEventListener("click", () => {
