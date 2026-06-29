@@ -81,15 +81,7 @@ depositSnapshot.forEach((requestDoc) => {
   `;
 });
   usersList.innerHTML = "";
-document.addEventListener("click", async (e) => {
 
-  if (!e.target.classList.contains("approveDepositBtn")) return;
-
-  const requestId = e.target.dataset.id;
-
-  alert("Approving deposit...");
-
-});
   snapshot.forEach((userDoc) => {
     const data = userDoc.data();
 
@@ -149,12 +141,7 @@ document.addEventListener("click", async (e) => {
     usersList.appendChild(card);
   });
 });
-
-document.getElementById("logoutBtn").addEventListener("click", () => {
-  signOut(auth).then(() => {
-    window.location.href = "index.html";
-  });
-  } catch (error) {
+} catch (error) {
   console.error(error);
 
   alert(
@@ -164,4 +151,10 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
     error.stack
   );
 }
+});
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  signOut(auth).then(() => {
+    window.location.href = "index.html";
+  });
 });
