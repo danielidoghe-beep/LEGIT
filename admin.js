@@ -80,7 +80,15 @@ depositSnapshot.forEach((requestDoc) => {
   `;
 });
   usersList.innerHTML = "";
+document.addEventListener("click", async (e) => {
 
+  if (!e.target.classList.contains("approveDepositBtn")) return;
+
+  const requestId = e.target.dataset.id;
+
+  alert("Approving deposit...");
+
+});
   snapshot.forEach((userDoc) => {
     const data = userDoc.data();
 
